@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, decorators
+from rest_framework import viewsets, permissions, decorators, filters
 from rest_framework.response import Response
 from django.db.models import Sum
 from decimal import Decimal
@@ -16,6 +16,9 @@ class IsOwner(permissions.BasePermission):
 class SemesterViewSet(viewsets.ModelViewSet):
     serializer_class = SemesterSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwner]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'level']
+    ordering_fields = ['created_at', 'name']
 
     def get_queryset(self):
         return Semester.objects.filter(owner=self.request.user).order_by('-created_at')
@@ -23,12 +26,15 @@ class SemesterViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
 class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwner]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['code', 'title', 'grade']
+    ordering_fields = ['code', 'unit']
 
     def get_queryset(self):
-        # limit to courses belonging to the current user's semesters
         return Course.objects.filter(semester__owner=self.request.user).order_by('code')
 
 # Aggregated stats (CGPA across all semesters)
