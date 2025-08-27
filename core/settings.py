@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ar55%od^ywyc$s795#gzxh%#kb^=t&ydh3%4+xxfqiwc=)-l0o
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "triplea.pythonanywhere.com", 
+    "https://triplea.pythonanywhere.com/", 
     "127.0.0.1", 
     "localhost",
 ]
