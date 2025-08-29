@@ -19,7 +19,7 @@ from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
-from django.http import JsonResponse
+from tracker.views import home
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -35,8 +35,8 @@ def home(request):
     return JsonResponse({"message": "Welcome to Academic Score Tracker!"})
 
 urlpatterns = [
-    path('', home),
     path('admin/', admin.site.urls),
+    path('', home, name='home'),
     path('api/', include('tracker.urls')), # your trackers urls
     path('api/auth/', include('users.urls')), # your auth urls
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

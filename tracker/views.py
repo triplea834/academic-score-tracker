@@ -4,6 +4,7 @@ from django.db.models import Sum
 from decimal import Decimal
 from .models import Semester, Course, GRADE_POINTS
 from .serializers import SemesterSerializer, CourseSerializer
+from django.http import JsonResponse
 
 class IsOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -53,3 +54,6 @@ def summary(request):
         'total_weighted_points': str(totals['weighted']),
         'cgpa': str(cgpa)
     })
+
+def home(request):
+    return JsonResponse({"message": "Welcome to Academic Score Tracker API"})
