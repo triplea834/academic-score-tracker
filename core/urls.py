@@ -19,7 +19,7 @@ from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
-from django.http import HttpResponse
+from django.http import JsonResponse
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -32,7 +32,7 @@ schema_view = get_schema_view(
 )
 
 def home(request):
-    return HttpResponse("Welcome to Academic Score Tracker API!")
+    return JsonResponse({"message": "Welcome to Academic Score Tracker!"})
 
 urlpatterns = [
     path('', home),
