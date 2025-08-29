@@ -19,6 +19,7 @@ from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
+from django.http import HttpResponse
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -30,7 +31,11 @@ schema_view = get_schema_view(
     permission_classes=[AllowAny],
 )
 
+def home(request):
+    return HttpResponse("Welcome to Academic Score Tracker API!")
+
 urlpatterns = [
+    path('', home),
     path('admin/', admin.site.urls),
     path('api/', include('tracker.urls')), # your trackers urls
     path('api/auth/', include('users.urls')), # your auth urls
